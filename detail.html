@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>游戏详情</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:'#9333ea'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .screenshot-img{
+      transition:0.2s;
+      cursor: zoom-in;
+    }
+    .screenshot-img:hover{
+      transform:scale(1.02);
+    }
+    #imgPreviewModal,#netdiskQrModal{
+      z-index:9999;
+    }
+    #previewImg{
+      max-width:92vw;
+      max-height:86vh;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+<!-- 截图预览弹窗 -->
+<div id="imgPreviewModal" class="fixed inset-0 bg-black/85 hidden flex flex-col items-center justify-center p-4">
+  <button id="previewClose" class="absolute top-4 right-4 text-white text-4xl bg-transparent border-none cursor-pointer z-10">&times;</button>
+  <button id="btnPrev" class="absolute left-3 top-1/2 -translate-y-1/2 text-white text-5xl bg-black/40 w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:bg-black/70 disabled:opacity-20 disabled:cursor-default">❮</button>
+  <button id="btnNext" class="absolute right-3 top-1/2 -translate-y-1/2 text-white text-5xl bg-black/40 w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:bg-black/70 disabled:opacity-20 disabled:cursor-default">❯</button>
+  <img id="previewImg" src="" alt="大图预览" class="rounded shadow-2xl">
+  <div id="pageInfo" class="mt-3 text-white text-lg"></div>
+</div>
+<!-- 网盘二维码弹窗【修改为固定标题+提示文字+图片结构】 -->
+<div id="netdiskQrModal" class="fixed inset-0 z-[9999] bg-black/75 hidden flex items-center justify-center p-4">
+  <div class="relative bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+    <button id="qrModalClose" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white text-gray-800 shadow-lg text-xl">×</button>
+    <h3 class="text-xl font-bold text-center mb-2">手机扫码保存资源</h3>
+    <p class="text-gray-500 text-sm text-center mb-4">请用网盘App扫码保存，再用电脑下载</p>
+    <img id="netdiskQrcodeImg" src="" alt="网盘二维码" class="w-full rounded">
+  </div>
+</div>
+<div class="max-w-5xl mx-auto px-3 py-6">
+  <!--面包屑导航 -->
+  <div class="text-sm text-gray-500 mb-4" id="breadWrap">
+  </div>
+  <div class="bg-white p-6 rounded shadow">
+    <!-- 工具专用容器 -->
+    <div id="toolLayout" class="hidden">
+      <h1 class="text-2xl font-bold mb-6">游戏工具</h1>
+
+      <!-- 第一区：运行库 -->
+      <div class="mb-8 bg-gray-50 p-5 rounded border">
+        <h2 class="text-lg font-bold border-l-4 border-primary pl-2 mb-3">运行库</h2>
+        <div class="text-gray-700 leading-relaxed mb-4" id="toolRuntimeDesc">
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button data-qr="runtimeBaiduQr" class="tool-qr-btn px-4 py-2 bg-blue-500 text-white rounded">百度网盘</button>
+          <button data-qr="runtimeQuarkQr" class="tool-qr-btn px-4 py-2 bg-blue-500 text-white rounded">夸克网盘</button>
+        </div>
+      </div>
+
+      <!-- 第二区：解压软件 -->
+      <div class="mb-8 bg-gray-50 p-5 rounded border">
+        <h2 class="text-lg font-bold border-l-4 border-primary pl-2 mb-3">解压软件</h2>
+        <div class="text-gray-700 leading-relaxed mb-4" id="toolUnzipDesc">
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button data-qr="unzipBaiduQr" class="tool-qr-btn px-4 py-2 bg-blue-500 text-white rounded">百度网盘</button>
+          <button data-qr="unzipQuarkQr" class="tool-qr-btn px-4 py-2 bg-blue-500 text-white rounded">夸克网盘</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 原有游戏详情容器 -->
+    <div id="gameLayout">
+      <div class="flex flex-col md:flex-row gap-6">
+        <div class="md:w-1/3">
+          <img id="detailCover" src="" class="w-full rounded">
+        </div>
+        <div class="md:w-2/3">
+          <h1 id="detailTitle" class="text-2xl font-bold mb-3"></h1>
+          <div class="text-sm text-gray-600 space-y-1">
+            <p>英文名：<span id="detailEng"></span></p>
+            <p>发行日期：<span id="detailUpdate"></span></p>
+            <p>版本：<span id="detailVersion"></span></p>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-4" id="tagWrap"></div>
+        </div>
+      </div>
+      <hr class="my-6">
+      <div class="mb-6">
+        <h2 class="text-lg font-bold border-l-4 border-primary pl-2 mb-3">游戏介绍</h2>
+        <div id="detailDesc" class="text-gray-700 leading-relaxed"></div>
+      </div>
+      <div class="mb-6">
+        <h2 class="text-lg font-bold border-l-4 border-primary pl-2 mb-3">游戏截图</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="shotWrap"></div>
+      </div>
+      <!-- Steam独立分区 -->
+      <div class="bg-blue-50 p-4 rounded border mb-4">
+        <h2 class="text-lg font-bold mb-2">🔗 官方商店</h2>
+        <p>Steam官网：<a id="linkSteam" target="_blank" class="text-blue-600 underline"></a></p>
+      </div>
+      <!-- 资源下载 -->
+      <div class="bg-gray-50 p-4 rounded border">
+        <h2 class="text-lg font-bold mb-3">📥资源下载</h2>
+        <div class="flex flex-wrap gap-3 mt-2">
+          <button id="btnBaiduQr" class="px-4 py-2 bg-blue-500 text-white rounded">百度网盘</button>
+          <button id="btnQuarkQr" class="px-4 py-2 bg-blue-500 text-white rounded">夸克网盘</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <a href="index.html" class="inline-block px-4 py-2 bg-primary text-white rounded">← 返回主页</a>
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // 网盘弹窗
+  const netdiskQrModal = document.getElementById("netdiskQrModal");
+  const netdiskQrcodeImg = document.getElementById("netdiskQrcodeImg");
+  const qrModalClose = document.getElementById("qrModalClose");
+  let currentToolData = null; //保存工具页面数据，用于事件委托读取二维码地址
+
+  function openNetdiskQr(src){
+    netdiskQrcodeImg.src = src;
+    netdiskQrModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+  function closeNetdiskQr(){
+    netdiskQrModal.classList.add("hidden");
+    netdiskQrcodeImg.src = "";
+    document.body.style.overflow = "";
+  }
+  //截图预览弹窗
+  const imgPreviewModal = document.getElementById('imgPreviewModal');
+  const previewImg = document.getElementById('previewImg');
+  const previewClose = document.getElementById('previewClose');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const pageInfo = document.getElementById('pageInfo');
+  let shotList = [];
+  let currentIndex = 0;
+  function refreshPreview(){
+    previewImg.src = shotList[currentIndex];
+    pageInfo.innerText = `${currentIndex+1} / ${shotList.length}`;
+    btnPrev.disabled = currentIndex <= 0;
+    btnNext.disabled = currentIndex >= shotList.length -1;
+  }
+  function openImgPreview(startIndex, imagesArr){
+    shotList = [...imagesArr];
+    currentIndex = startIndex;
+    refreshPreview();
+    imgPreviewModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeImgPreview(){
+    imgPreviewModal.classList.add('hidden');
+    previewImg.src = '';
+    document.body.style.overflow = '';
+    shotList = [];
+    currentIndex = 0;
+  }
+  function goPrev(){
+    if(currentIndex > 0){ currentIndex--; refreshPreview(); }
+  }
+  function goNext(){
+    if(currentIndex < shotList.length -1){ currentIndex++; refreshPreview(); }
+  }
+  previewClose.addEventListener('click', closeImgPreview);
+  btnPrev.addEventListener('click', goPrev);
+  btnNext.addEventListener('click', goNext);
+  imgPreviewModal.addEventListener('click', e=>{
+    if(e.target === imgPreviewModal) closeImgPreview();
+  })
+  //ESC按键
+  document.addEventListener('keydown',function(e){
+    if(e.key === 'Escape'){
+      !imgPreviewModal.classList.contains('hidden') && closeImgPreview();
+      !netdiskQrModal.classList.contains('hidden') && closeNetdiskQr();
+    }
+    if(!imgPreviewModal.classList.contains('hidden')){
+      if(e.key === 'ArrowLeft') goPrev();
+      if(e.key === 'ArrowRight') goNext();
+    }
+  })
+
+  // ============数据库，gid=1改为工具数据============
+  const gameDB = {
+    "1":{
+      isTool:true, //标记为工具页面
+      name:"游戏工具",
+      runtimeDesc:"运行库合集，包含VC++、.NET Framework等组件，很多游戏运行依赖此工具，缺失会出现dll丢失、无法启动等报错，运行库下载解压后点“默认安装”。游戏还是打不开的，一路径文件夹不要有中文名，二看启动说明第一行说的点哪个启动游戏（没找到启动说明第一行说的那个就是被删了，安全中心的保护记录隔离里恢复一下）",
+      runtimeBaiduQr:"images/运行库百度.png",
+      runtimeQuarkQr:"images/运行库夸克.png",
+
+      unzipDesc:"解压软件推荐，支持7z、rar、zip等常见压缩格式，用于解压游戏压缩包，推荐使用避免解压报错。",
+      unzipBaiduQr:"images/解压软件百度.png",
+      unzipQuarkQr:"images/解压软件夸克.png",
+    },
+    "9":{
+      name:"龙之信条2",
+      eng:"Dragon's Dogma 2",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2054970/header.jpg?t=1788308490",
+      update:"2024‑03‑22",
+      version:"v3.2.0.0",
+      desc:"能够响应玩家想像且丰富多彩的动作，以及即使是单人游玩也能享受「与他人一起冒险的乐趣」的游戏体验。 借助最新的画面、物理计算及人工智能，精心编织而成的王道幻想世界。这个世界充满着惊喜和现实感。 与旅伴追随者一起，让我们踏入一场独一无二的冒险吧。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2054970/ss_f419f8b6577558b40ce8c384f4bfaabbf44c8a8e.116x65.jpg?t=1788308490",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2054970/ss_037861574d85abdfb8908204e446544abd92effe.1920x1080.jpg?t=1788308490",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2054970/ss_ef263c112e274dc73a4bb00596aee1ebfc2b0ed8.1920x1080.jpg?t=1788308490",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2054970/ss_8979e7af203f7405845f76ffa73749d924540e97.1920x1080.jpg?t=1788308490",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2054970/ss_a2878bf879ea6c36cc2c5a554007a5116e8ede14.1920x1080.jpg?t=1788308490",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2054970/ss_06cdf45af9fa89bc9a6e9d46f830fe0e9d84f1e3.1920x1080.jpg?t=1788308490"
+      ],
+      baiduQr:"images/龙之信条2百度.png",
+      quarkQr:"images/龙之信条2夸克.png",
+      steam:"https://store.steampowered.com/app/2054970"
+    },
+    "8":{
+      name:"喵斯快跑",
+      eng:"Muse Dash",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/774171/header.jpg?t=1782378353",
+      update:"2019‑06‑20",
+      version:"v6.6.0",
+      desc:"狂拽跑酷和传统音游结合的世界 ★★★ —— 《 Muse Dash 》!!",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/774171/ss_08637a7ac0fb40479d0ad69c78e49805641644e3.1920x1080.jpg?t=1782378353",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/774171/ss_2c2433413895c9d90ce5e7e31d81e963a2238bc3.1920x1080.jpg?t=1782378353",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/774171/ss_ab029483f2e7341ac621540794e4d372acd02213.1920x1080.jpg?t=1782378353",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/774171/ss_a8d9434bb3ecdfd3100f3d24f4ba7b6ebe36427b.1920x1080.jpg?t=1782378353",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/774171/ss_a35acedc51f199976e7941a62369a0d0b5c819d7.1920x1080.jpg?t=1782378353",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/774171/ss_ebdfd02f12d25a2f4eaed8ccbd292ecca529ed70.1920x1080.jpg?t=1782378353"
+      ],
+      baiduQr:"images/喵斯快跑百度.png",
+      quarkQr:"images/喵斯快跑夸克.png",
+      steam:"https://store.steampowered.com/app/774171"
+    },
+    "7":{
+      name:"深海迷航：冰点之下",
+      eng:"Subnautica: Below Zero",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/848450/header.jpg?t=1777456254",
+      update:"2021‑05‑14",
+      version:"v53872",
+      desc:"在外星上，潜入冰冻的水下冒险。《Below Zero》的故事发生在《Subnautica》原作之后的两年。重返4546B行星，揭开致命的掩饰行动背后的真相。建造加压舱，打造工具，在恶劣条件中生存，深潜进入《Subnautica》的世界。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/848450/ss_5011daad83f8494eda0826e4bbc91181239ad5d7.1920x1080.jpg?t=1777456254",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/848450/ss_9e3d6ab0db5442f7bcbeb923da47d3a80023f50f.1920x1080.jpg?t=1777456254",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/848450/ss_e5c0f0272552f4aff9129ce3683131bdabd5983c.1920x1080.jpg?t=1777456254",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/848450/ss_4175a9e5b1533698856493140038643f2f4669b5.1920x1080.jpg?t=1777456254",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/848450/ss_a0686edd0106fa67746037a29a9846b8448dff0c.1920x1080.jpg?t=1777456254",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/848450/ss_633db996460f37a755b4e03ad9c9804907ab2478.1920x1080.jpg?t=1777456254"
+      ],
+      baiduQr:"images/深海迷航：冰点之下百度.png",
+      quarkQr:"images/深海迷航：冰点之下夸克.png",
+      steam:"https://store.steampowered.com/app/848450"
+    },
+    "6":{
+      name:"深海迷航",
+      eng:"Subnautica",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/264710/header_schinese.jpg?t=1777456112",
+      update:"2018‑01‑23",
+      version:"v83031",
+      desc:"潜入充满奇迹与危险的异域水下世界。制作设备、驾驶潜艇和智胜野生动物，探索茂密的珊瑚礁、火山、洞穴系统等——同时努力求生。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/264710/ss_e182b6b20bb797500f9f63c561586d920d44e37c.1920x1080.jpg?t=1777456112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/264710/ss_5f2f2ea498cdc632cbffd6cf37c1a09670eb3272.1920x1080.jpg?t=1777456112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/264710/ss_cebc378d2f7bc78978c21db4e3c5e12ccd067349.1920x1080.jpg?t=1777456112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/264710/ss_0ace7f8b4350b8fbdd16345a76bc30545256e918.1920x1080.jpg?t=1777456112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/264710/ss_f0eeabe108c2bc2b3e370b9828fb280035b50db2.1920x1080.jpg?t=1777456112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/264710/ss_623579a6693f6fc48033e619cacc4306f10eef15.1920x1080.jpg?t=1777456112"
+      ],
+      baiduQr:"images/深海迷航百度.png",
+      quarkQr:"images/深海迷航夸克.png",
+      steam:"https://store.steampowered.com/app/264710"
+    },
+    "5":{
+      name:"深海迷航2：异星水域 单机+联机",
+      eng:"Subnautica 2",
+      cover:"images/深海迷航2：异星水域.jpg",
+      update:"2026‑08‑04",
+      version:"v0.1.2.0",
+      desc:"《Subnautica 2：异星水域》是背景设定在全新外星世界的水下生存冒险游戏，由Unknown Worlds倾力打造。可以单人游玩，也可以与好友组队开启四人合作模式。建造专属基地，制作不同工具，适应环境，水下求生。探索未知世界，揭开深海中隐藏的谜团。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1962700/998f14fffb6e9917639ce4ba992c7e9f4a0157b5/header_schinese.jpg?t=1785967256",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1962700/823b102b09530bbf588f5e9752cb52f1681dc992/ss_823b102b09530bbf588f5e9752cb52f1681dc992.1920x1080.jpg?t=1785967256",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1962700/e631ef3b91faacacb5a2c823d0b979083548d66f/ss_e631ef3b91faacacb5a2c823d0b979083548d66f.1920x1080.jpg?t=1785967256",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1962700/16b68b0941ed9c5ac1eea74e478fa726d425bebf/ss_16b68b0941ed9c5ac1eea74e478fa726d425bebf.1920x1080.jpg?t=1785967256",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1962700/56159597a28edfb07c6dd27b4a00f2e06e571048/ss_56159597a28edfb07c6dd27b4a00f2e06e571048.1920x1080.jpg?t=1785967256",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1962700/787e2315a1eb5aaba73c4f75e6f7d7d8835fa260/ss_787e2315a1eb5aaba73c4f75e6f7d7d8835fa260.1920x1080.jpg?t=1785967256"
+      ],
+      baiduQr:"images/深海迷航2：异星水域百度.png",
+      quarkQr:"images/深海迷航2：异星水域夸克.png",
+      steam:"https://store.steampowered.com/app/1962700"
+    },
+    "2":{
+      name:"轮回之兽",
+      eng:"Beast of Reincarnation",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2001760/59d5f1ce88f6ab3388c578dff543997e088c805d/header_schinese.jpg?t=1788151394",
+      update:"2026‑08‑04",
+      version:"v1.0.10.0",
+      desc:"Game Freak 诚意新作：《轮回之兽》是一款融合了即时与回合制战斗的动作角色扮演游戏。在美丽而又严酷的《轮回之兽》世界中，享受创新的“一人一狗协作动作角色扮演”体验。在艾玛和小库的旅程终点会有什么在等待着他们呢？",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2001760/f55c103953c70b47025b04f0c121b1723d6c1670/ss_f55c103953c70b47025b04f0c121b1723d6c1670.1920x1080.jpg?t=1788151394",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2001760/f9988d54094c2a099e5dafcdd12f045e4ca35f3b/ss_f9988d54094c2a099e5dafcdd12f045e4ca35f3b.1920x1080.jpg?t=1788151394",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2001760/7252f8336988a2830e56428d99cf8792bc172161/ss_7252f8336988a2830e56428d99cf8792bc172161.1920x1080.jpg?t=1788151394",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2001760/9759eb253a5c18a6e9840d89e7127f610627c684/ss_9759eb253a5c18a6e9840d89e7127f610627c684.1920x1080.jpg?t=1788151394",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2001760/8c99c5092bae7a08967faff2f77ca9a3e41f72a3/ss_8c99c5092bae7a08967faff2f77ca9a3e41f72a3.1920x1080.jpg?t=1788151394",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2001760/9165d04eccf6fb47c9b71f7a80ed685726502b6f/ss_9165d04eccf6fb47c9b71f7a80ed685726502b6f.1920x1080.jpg?t=1788151394"
+      ],
+      baiduQr:"images/轮回之兽百度.png",
+      quarkQr:"images/轮回之兽夸克.png",
+      steam:"https://store.steampowered.com/app/2001760"
+    },
+    "3":{
+      name:"七日杀 单机+联机",
+      eng:"7 Days to Die",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/251570/header.jpg?t=1788209289",
+      update:"2024‑07‑26",
+      version:"v3.2.0.B10",
+      desc:"《7 Days》是一款开放世界游戏，独具特色地融合了第一人称射击、生存恐怖、塔防和角色扮演等多种游戏的特征。快来体验这款具有开创性的终极丧尸生存沙盒角色扮演游戏吧。纳维戈恩在等着你！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/251570/766ed3debfe7b894fbb5650aa89fa213fa254d5d/ss_766ed3debfe7b894fbb5650aa89fa213fa254d5d.1920x1080.jpg?t=1788209289",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/251570/2d243d95de4989b37df448f29de123f0d662088c/ss_2d243d95de4989b37df448f29de123f0d662088c.1920x1080.jpg?t=1788209289",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/251570/33edbeefc7f5ff8ccda4bda274b01eff84eb4eb8/ss_33edbeefc7f5ff8ccda4bda274b01eff84eb4eb8.1920x1080.jpg?t=1788209289",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/251570/70c05a775f747e9d556435bfd8795536ddd4117d/ss_70c05a775f747e9d556435bfd8795536ddd4117d.1920x1080.jpg?t=1788209289",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/251570/d7b2bba330c25e1eae848d8d8bb7321b9b1833d0/ss_d7b2bba330c25e1eae848d8d8bb7321b9b1833d0.1920x1080.jpg?t=1788209289",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/251570/2c68f3a101bd9bf7655a021f07f397e093666582/ss_2c68f3a101bd9bf7655a021f07f397e093666582.1920x1080.jpg?t=1788209289"
+      ],
+      baiduQr:"images/七日杀百度.png",
+      quarkQr:"images/七日杀夸克.png",
+      steam:"https://store.steampowered.com/app/251570"
+    },
+    "4":{
+      name:"卡牌修仙传",
+      eng:"Card Cultivation",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2963600/header_schinese.jpg?t=1786117448",
+      update:"2026‑03‑05",
+      version:"v2.3.0.8",
+      desc:"《卡牌修仙传》是一款水墨风格，修仙题材的卡牌管理游戏。玩家将扮演一名失去记忆的修仙者，在自由游历世界的同时，修炼自身，探索秘境，打造法宝，惩奸除恶，以找回失去的记忆，并以自己的方式飞升仙界。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2963600/e32e4e728e67a46afc11eadb3690e6b56bdf02ea/ss_e32e4e728e67a46afc11eadb3690e6b56bdf02ea.1920x1080.jpg?t=1786117448",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2963600/cc2d4c17ecda74fc19d72fc26df842ea305ba1a9/ss_cc2d4c17ecda74fc19d72fc26df842ea305ba1a9.1920x1080.jpg?t=1786117448",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2963600/7874891340ba714fa089fc90a2b0c50e26cc46bb/ss_7874891340ba714fa089fc90a2b0c50e26cc46bb.1920x1080.jpg?t=1786117448",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2963600/f0fdfcddf5f4a0bd6ea08c6b3bd04e96b78f9d3a/ss_f0fdfcddf5f4a0bd6ea08c6b3bd04e96b78f9d3a.1920x1080.jpg?t=1786117448",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2963600/16512d3e70fdeb5fe7dde6b035c78d30b0d8dd91/ss_16512d3e70fdeb5fe7dde6b035c78d30b0d8dd91.1920x1080.jpg?t=1786117448",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2963600/11208e95acdde36cd9df6ea6ef8b31a381d0c602/ss_11208e95acdde36cd9df6ea6ef8b31a381d0c602.1920x1080.jpg?t=1786117448"
+      ],
+      baiduQr:"images/卡牌修仙传百度.png",
+      quarkQr:"images/卡牌修仙传夸克.png",
+      steam:"https://store.steampowered.com/app/2963600"
+    }
+  };
+  function getUrlParam(name){
+    const u = new URL(window.location.href);
+    return u.searchParams.get(name);
+  }
+  const gid = getUrlParam("gid");
+  const cat = getUrlParam("cat");
+  const data = gameDB[gid];
+  if(!data){
+    document.body.innerHTML = `<div class="p-10 text-center"><h2>页面不存在</h2><a href="index.html">返回首页</a></div>`;
+    return;
+  }
+
+  //dom
+  const toolLayout = document.getElementById('toolLayout');
+  const gameLayout = document.getElementById('gameLayout');
+  const breadWrap = document.getElementById("breadWrap");
+
+  //面包屑
+  let breadHtml = `<a href="index.html" class="text-blue-600">主页</a>`;
+  if(cat){
+    breadHtml += ` <span> › </span> <a href="index.html?cat=${encodeURIComponent(cat)}" class="text-blue-600">${cat}</a>`;
+  }
+  breadHtml += ` <span> › </span> <span>${data.name}</span>`;
+  breadWrap.innerHTML = breadHtml;
+
+
+  if(data.isTool){
+    //渲染工具页面，隐藏游戏布局
+    toolLayout.classList.remove('hidden');
+    gameLayout.classList.add('hidden');
+    currentToolData = data; //保存工具数据给委托事件使用
+
+    document.getElementById('toolRuntimeDesc').innerText = data.runtimeDesc;
+    document.getElementById('toolUnzipDesc').innerText = data.unzipDesc;
+
+  }else{
+    //普通游戏页面
+    toolLayout.classList.add('hidden');
+    gameLayout.classList.remove('hidden');
+    currentToolData = null;
+
+    const btnBaiduQr = document.getElementById("btnBaiduQr");
+    const btnQuarkQr = document.getElementById("btnQuarkQr");
+
+    btnBaiduQr.addEventListener("click", ()=>openNetdiskQr(data.baiduQr));
+    btnQuarkQr.addEventListener("click", ()=>openNetdiskQr(data.quarkQr));
+
+    document.getElementById("detailTitle").innerText = data.name;
+    document.getElementById("detailEng").innerText = data.eng;
+    document.getElementById("detailCover").src = data.cover;
+    document.getElementById("detailUpdate").innerText = data.update;
+    document.getElementById("detailVersion").innerText = data.version;
+    document.getElementById("linkSteam").href = data.steam;
+    document.getElementById("linkSteam").innerText = data.steam;
+    document.getElementById("detailDesc").innerText = data.desc;
+
+    //渲染截图
+    let shotHtml = "";
+    data.shots.forEach((s,idx)=>{
+      shotHtml += `<img src="${s}" class="screenshot-img rounded w-full" data-idx="${idx}">`
+    })
+    document.getElementById("shotWrap").innerHTML = shotHtml;
+    document.querySelectorAll('.screenshot-img').forEach(img=>{
+      img.onclick = function(){
+        const idx = Number(this.dataset.idx);
+        openImgPreview(idx, data.shots);
+      }
+    })
+  }
+
+  //====事件委托：工具页面按钮点击，修复hidden容器绑定失效问题====
+  document.body.addEventListener('click',function(e){
+    if(e.target.classList.contains('tool-qr-btn') && currentToolData){
+      const qrKey = e.target.dataset.qr;
+      openNetdiskQr(currentToolData[qrKey]);
+    }
+  })
+
+  qrModalClose.addEventListener("click", closeNetdiskQr);
+  netdiskQrModal.addEventListener("click", e=>{
+    if(e.target === netdiskQrModal) closeNetdiskQr();
+  })
+
+})
+</script>
+</body>
+</html>
