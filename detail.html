@@ -47,8 +47,8 @@
 <div id="netdiskQrModal" class="fixed inset-0 z-[9999] bg-black/75 hidden flex items-center justify-center p-4">
   <div class="relative bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
     <button id="qrModalClose" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white text-gray-800 shadow-lg text-xl">×</button>
-    <h3 class="text-xl font-bold text-center mb-2">手机扫码保存资源</h3>
-    <p class="text-gray-500 text-sm text-center mb-4">请用网盘App扫码保存，再用电脑下载</p>
+    <h3 class="text-xl font-bold text-center mb-2">手机扫码保存资源，电脑下载</h3>
+    <p class="text-gray-500 text-sm text-center mb-4">百度网盘APP扫码部分只提示下载没提示保存，建议用QQ、微信、浏览器等扫码保存，再用电脑下载</p>
     <img id="netdiskQrcodeImg" src="" alt="网盘二维码" class="w-full rounded">
   </div>
 </div>
@@ -60,7 +60,6 @@
     <!-- 工具专用容器 -->
     <div id="toolLayout" class="hidden">
       <h1 class="text-2xl font-bold mb-6">游戏工具</h1>
-
       <!-- 第一区：运行库 -->
       <div class="mb-8 bg-gray-50 p-5 rounded border">
         <h2 class="text-lg font-bold border-l-4 border-primary pl-2 mb-3">运行库</h2>
@@ -71,7 +70,6 @@
           <button data-qr="runtimeQuarkQr" class="tool-qr-btn px-4 py-2 bg-blue-500 text-white rounded">夸克网盘</button>
         </div>
       </div>
-
       <!-- 第二区：解压软件 -->
       <div class="mb-8 bg-gray-50 p-5 rounded border">
         <h2 class="text-lg font-bold border-l-4 border-primary pl-2 mb-3">解压软件</h2>
@@ -82,9 +80,11 @@
           <button data-qr="unzipQuarkQr" class="tool-qr-btn px-4 py-2 bg-blue-500 text-white rounded">夸克网盘</button>
         </div>
       </div>
-
+      <!-- 新增分区：网盘提取码 -->
+      <div class="mb-8 bg-gray-50 p-5 rounded border">
+        <h2 class="text-lg font-bold border-l-4 border-primary pl-2">网站里所有百度网盘提取码：FUFU</h2>
+      </div>
     </div>
-
     <!-- 原有游戏详情容器 -->
     <div id="gameLayout">
       <div class="flex flex-col md:flex-row gap-6">
@@ -124,7 +124,6 @@
         </div>
       </div>
     </div>
-
     <div class="mt-6">
       <a href="index.html" class="inline-block px-4 py-2 bg-primary text-white rounded">← 返回主页</a>
     </div>
@@ -137,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function(){
   const netdiskQrcodeImg = document.getElementById("netdiskQrcodeImg");
   const qrModalClose = document.getElementById("qrModalClose");
   let currentToolData = null; //保存工具页面数据，用于事件委托读取二维码地址
-
   function openNetdiskQr(src){
     netdiskQrcodeImg.src = src;
     netdiskQrModal.classList.remove("hidden");
@@ -200,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function(){
       if(e.key === 'ArrowRight') goNext();
     }
   })
-
   // ============数据库，gid=1改为工具数据============
   const gameDB = {
     "1":{
@@ -209,10 +206,541 @@ document.addEventListener('DOMContentLoaded', function(){
       runtimeDesc:"运行库合集，包含VC++、.NET Framework等组件，很多游戏运行依赖此工具，缺失会出现dll丢失、无法启动等报错，运行库下载解压后点“默认安装”。游戏还是打不开的，一路径文件夹不要有中文名，二看启动说明第一行说的点哪个启动游戏（没找到启动说明第一行说的那个就是被删了，安全中心的保护记录隔离里恢复一下）",
       runtimeBaiduQr:"images/运行库百度.png",
       runtimeQuarkQr:"images/运行库夸克.png",
-
       unzipDesc:"解压软件推荐，支持7z、rar、zip等常见压缩格式，用于解压游戏压缩包，推荐使用避免解压报错。",
       unzipBaiduQr:"images/解压软件百度.png",
       unzipQuarkQr:"images/解压软件夸克.png",
+    },
+    "37":{
+      name:"最后的守护者",
+      eng:"The Last Caretaker",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1783560/684058b57eeffd521d8b5f94a026c9218ce74e58/header.jpg?t=1788262247",
+      update:"2025-11‑06",
+      version:"v0.8.5.651027",
+      desc:"探索被海水淹没的地球，修复失落的系统，培育最后的人类种子。建造、搜集、守护，带领人类重返星辰大海。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1783560/3f622fa92171171ce34dbfe428f3f54c02e1b454/ss_3f622fa92171171ce34dbfe428f3f54c02e1b454.1920x1080.jpg?t=1788262247",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1783560/279d08fe3556dfc12c2724b7884933d7e0b2567c/ss_279d08fe3556dfc12c2724b7884933d7e0b2567c.1920x1080.jpg?t=1788262247",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1783560/0751cfaca551a16539d684ce0789bce74736bc51/ss_0751cfaca551a16539d684ce0789bce74736bc51.1920x1080.jpg?t=1788262247",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1783560/eccfa15869129829bfebca5524683bbc0e918d8c/ss_eccfa15869129829bfebca5524683bbc0e918d8c.1920x1080.jpg?t=1788262247",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1783560/451a8d4d90cefa8ba99b04d2824542d86a352cca/ss_451a8d4d90cefa8ba99b04d2824542d86a352cca.1920x1080.jpg?t=1788262247",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1783560/7ff32c9d703dc0660c5ce27b2396e4a9505158e9/ss_7ff32c9d703dc0660c5ce27b2396e4a9505158e9.1920x1080.jpg?t=1788262247"
+      ],
+      baiduQr:"images/最后的守护者百度.png",
+      quarkQr:"images/最后的守护者夸克.png",
+      steam:"https://store.steampowered.com/app/1783560"
+    },
+    "36":{
+      name:"雪地奔驰",
+      eng:"SnowRunner",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1465360/header.jpg?t=1788339013",
+      update:"2021-05‑18",
+      version:"v20260902",
+      desc:"做好准备，迎接下一代越野体验吧！ 驾驶强力载具，克服各种极端户外环境，完成诸多挑战任务。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1465360/ss_940259cd3dc33743bc06f2e686f2b6878b961b14.1920x1080.jpg?t=1788339013",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1465360/ss_0851d89715e625f0f316012d1d84e85a882b6099.1920x1080.jpg?t=1788339013",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1465360/ss_8f0215990d1ac3afe02b0b745825245e2ada2c07.1920x1080.jpg?t=1788339013",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1465360/ss_8b7d5be8de0e50fd27317c4faf5dbb16faf61a40.1920x1080.jpg?t=1788339013",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1465360/ss_b1bb888101b715fa25f730741ab044afb4858ce6.1920x1080.jpg?t=1788339013",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1465360/ss_7d4c05e9201a8e891428b735d557b19c74f62219.1920x1080.jpg?t=1788339013"
+      ],
+      baiduQr:"images/雪地奔驰百度.png",
+      quarkQr:"images/雪地奔驰夸克.png",
+      steam:"https://store.steampowered.com/app/1465360"
+    },
+    "35":{
+      name:"禁闭求生2 单机+联机",
+      eng:"Grounded 2",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2661300/b52405d3dd3d4bfd356cd9af7b399bcbc5a23f7e/header.jpg?t=1787010637",
+      update:"2025-07‑30",
+      version:"v0.5.0.5",
+      desc:"两年前，你缩成了蚂蚁大小——现在情况再次发生，但已经有点不一样了",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2661300/7a8fbba43e7ca616584f5676d864d02ed15930db/ss_7a8fbba43e7ca616584f5676d864d02ed15930db.1920x1080.jpg?t=1787010637",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2661300/7722cad8aa8a0c86c2f7f9eae18345a76ae7ab2c/ss_7722cad8aa8a0c86c2f7f9eae18345a76ae7ab2c.1920x1080.jpg?t=1787010637",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2661300/28a962ecdb398fb4c57937297693a6fc11db1c99/ss_28a962ecdb398fb4c57937297693a6fc11db1c99.1920x1080.jpg?t=1787010637",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2661300/bd079e7ed3efb705d3dd44aa1b8a3a5a2cc19ef1/ss_bd079e7ed3efb705d3dd44aa1b8a3a5a2cc19ef1.1920x1080.jpg?t=1787010637",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2661300/2ded29a36709833c15c0639b2d16bf6e893978fc/ss_2ded29a36709833c15c0639b2d16bf6e893978fc.1920x1080.jpg?t=1787010637",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2661300/fe1ab0909aadafa46a6092103934545823bb0a7e/ss_fe1ab0909aadafa46a6092103934545823bb0a7e.1920x1080.jpg?t=1787010637"
+      ],
+      baiduQr:"images/禁闭求生2百度.png",
+      quarkQr:"images/禁闭求生2夸克.png",
+      steam:"https://store.steampowered.com/app/2661300"
+    },
+    "34":{
+      name:"龙之剑：觉醒",
+      eng:"DragonSword Awakening",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4570720/96a897e98f4472e656fbe6681191b3066cab6056/header.jpg?t=1788398112",
+      update:"2026-07‑23",
+      version:"v1.0.11",
+      desc:"踏入由虚幻引擎5打造的动画风格开放世界，探索奥尔比斯大陆！集结个性鲜明的伙伴，以状态异常触发华丽的接力连携，共同迎战沉寂60年后再度复苏的巨龙，踏上拯救世界的壮阔旅程。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4570720/3465ef4d24f71d133cd345f7e6dcf3df89ff051a/ss_3465ef4d24f71d133cd345f7e6dcf3df89ff051a.1920x1080.jpg?t=1788398112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4570720/54e15b9fe0c6c57f1e0c31df0572729ae5108ec8/ss_54e15b9fe0c6c57f1e0c31df0572729ae5108ec8.1920x1080.jpg?t=1788398112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4570720/31e4fcb6d3398d96a98a3f63024b0e6176364147/ss_31e4fcb6d3398d96a98a3f63024b0e6176364147.1920x1080.jpg?t=1788398112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4570720/5ae43eac4a90c4f0ca702c05e1a3af39f3c71e9d/ss_5ae43eac4a90c4f0ca702c05e1a3af39f3c71e9d.1920x1080.jpg?t=1788398112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4570720/04834ee302c959e8bd4f55d305305e64cf29aa03/ss_04834ee302c959e8bd4f55d305305e64cf29aa03.1920x1080.jpg?t=1788398112",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4570720/33056464811219dc5b09b634f135e576bd792f75/ss_33056464811219dc5b09b634f135e576bd792f75.1920x1080.jpg?t=1788398112"
+      ],
+      baiduQr:"images/龙之剑：觉醒百度.png",
+      quarkQr:"images/龙之剑：觉醒夸克.png",
+      steam:"https://store.steampowered.com/app/4570720"
+    },
+    "33":{
+      name:"黎明行者之血",
+      eng:"The Blood of Dawnwalker",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3751260/7b0c1860c7c2fca069ae53c049b737176dbfb8d4/header_schinese.jpg?t=1788444722",
+      update:"2026-09‑03",
+      version:"v1.0.1",
+      desc:"《The Blood of Dawnwalker》为开放世界的黑暗奇幻动作RPG。 故事背景在14世纪的欧洲，你将扮演科恩，一名白昼时为人类，黑夜时为吸血鬼的年轻人。在为了拯救家人的奋斗之中，所做出的各种抉择与揭露的秘密，将塑造成属于你的故事。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3751260/1af5d14d9b6a36c14eae3bebf56c0e0f63235633/ss_1af5d14d9b6a36c14eae3bebf56c0e0f63235633.1920x1080.jpg?t=1788444722",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3751260/b91c26c945ec2453f7dbb1f6a3f8992edcccc484/ss_b91c26c945ec2453f7dbb1f6a3f8992edcccc484.1920x1080.jpg?t=1788444722",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3751260/2aeb99f7ea9968e69ea460e4c994a1ff280fb32d/ss_2aeb99f7ea9968e69ea460e4c994a1ff280fb32d.1920x1080.jpg?t=1788444722",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3751260/533e61e6ba42cfebbd3b6d3926ecbbc4edd285dc/ss_533e61e6ba42cfebbd3b6d3926ecbbc4edd285dc.1920x1080.jpg?t=1788444722",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3751260/2fe9d22ce8483f1ca06b37ffa061a8428447f55c/ss_2fe9d22ce8483f1ca06b37ffa061a8428447f55c.1920x1080.jpg?t=1788444722",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3751260/5c76f48ae1487a08118132512ea932afb238cebf/ss_5c76f48ae1487a08118132512ea932afb238cebf.1920x1080.jpg?t=1788444722"
+      ],
+      baiduQr:"images/黎明行者之血百度.png",
+      quarkQr:"images/黎明行者之血夸克.png",
+      steam:"https://store.steampowered.com/app/3751260"
+    },
+    "32":{
+      name:"后汉姬异录",
+      eng:"",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2715730/afd0fa823a90059cd76617c8c04bb8fbaa4c0c11/header_schinese.jpg?t=1788182509",
+      update:"2026-03‑04",
+      version:"v0.21.3",
+      desc:"浩浩荡荡的关东联军，如今已作鸟兽散，而属于关东诸侯的时代才刚刚开始。四世三公的汝南袁氏之后——袁绍和袁术，北地的宗室长者与白马将军，日后名扬天下的两位枭雄，被李傕郭汜逐出长安的吕布，正各自纵横捭阖，逐鹿中原，而本作将以新的视角为您讲述这段不可谓不波澜壮阔的前三国时代的故事。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2715730/ss_b40a686e7b0b5471f4ebc680cd33f4206d698940.1920x1080.jpg?t=1788182509",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2715730/ss_5152b26ce70d620437b217612ec8992b6fe34343.1920x1080.jpg?t=1788182509",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2715730/90311784a4cab0c2d025f5297913e6a309f30b4d/ss_90311784a4cab0c2d025f5297913e6a309f30b4d.1920x1080.jpg?t=1788182509",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2715730/68be0b034ae427e9b79bcf6cd4b1837820152a73/ss_68be0b034ae427e9b79bcf6cd4b1837820152a73.1920x1080.jpg?t=1788182509",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2715730/e7a25658a64e05a636ede1086b60b43f5546fd21/ss_e7a25658a64e05a636ede1086b60b43f5546fd21.1920x1080.jpg?t=1788182509",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2715730/f176811ae7e29e3fe2a9a50cb8a9cdf450646be5/ss_f176811ae7e29e3fe2a9a50cb8a9cdf450646be5.1920x1080.jpg?t=1788182509"
+      ],
+      baiduQr:"images/后汉姬异录百度.png",
+      quarkQr:"images/后汉姬异录夸克.png",
+      steam:"https://store.steampowered.com/app/2715730"
+    },
+    "31":{
+      name:"导师模拟器：桌面实验室",
+      eng:"Professor Simulator",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3894790/804c898da0c03c0bbcc9a3450596d583746b65b3/header_schinese.jpg?t=1786629796",
+      update:"2026-06‑08",
+      version:"v1.2.3",
+      desc:"《导师模拟器：桌面实验室》是一款科研主题的半挂机桌面模拟游戏。把实验室放在屏幕一角，陪伴你工作、学习或休息。招收硕士与博士生，申请项目、发表论文、添置设备，观察像素学生认真研究、交流生活和偶尔摸鱼，一步步建设属于自己的科研团队。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3894790/23fa0e48e81de58537313ff36ae33cc2bcbfbc0f/ss_23fa0e48e81de58537313ff36ae33cc2bcbfbc0f.1920x1080.jpg?t=1786629796",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3894790/990d239ff636d3db528d9a5317eb66d04d839569/ss_990d239ff636d3db528d9a5317eb66d04d839569.1920x1080.jpg?t=1786629796",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3894790/65185120e9429e69dd82e6f92474b72f642b944a/ss_65185120e9429e69dd82e6f92474b72f642b944a.1920x1080.jpg?t=1786629796",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3894790/124ba21c8a0004901dc6fc1ed833177b11e500c2/ss_124ba21c8a0004901dc6fc1ed833177b11e500c2.1920x1080.jpg?t=1786629796",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3894790/fd894f39a757dbee2daa40e2d0e74933780c4000/ss_fd894f39a757dbee2daa40e2d0e74933780c4000.1920x1080.jpg?t=1786629796",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3894790/1d235bde3112d0d2b13f001aff3656b2f5eb5210/ss_1d235bde3112d0d2b13f001aff3656b2f5eb5210.1920x1080.jpg?t=1786629796"
+      ],
+      baiduQr:"images/导师模拟器：桌面实验室百度.png",
+      quarkQr:"images/导师模拟器：桌面实验室夸克.png",
+      steam:"https://store.steampowered.com/app/3894790"
+    },
+    "30":{
+      name:"造化仙缘",
+      eng:"Destiny of Immortal",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2377930/6b6f06d35161df870addd2d92dc3ef94a785d837/header_schinese.jpg?t=1788418445",
+      update:"2026-07‑08",
+      version:"v0.13.34",
+      desc:"《造化仙缘》是一款修仙题材的角色扮演游戏，本作最大魅力在于高密度爽点的爽文式剧情与丰富的功法构筑融合玩法。传说在宇宙开辟之初，诞生了几件造化至宝，各自拥有逆天的功能。你无意中获得其中一件造化至宝，开始了如同开挂一般的修仙之旅。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2377930/e1fea51bf76be99af1fc2a01f42fe0a833c7ad11/ss_e1fea51bf76be99af1fc2a01f42fe0a833c7ad11.1920x1080.jpg?t=1788418445",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2377930/eebea65f1d3c89f76740d866b80f0b70b2ecbea3/ss_eebea65f1d3c89f76740d866b80f0b70b2ecbea3.1920x1080.jpg?t=1788418445",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2377930/67a41a952f53eb8ad87f4e935b994e00cecf64bb/ss_67a41a952f53eb8ad87f4e935b994e00cecf64bb.1920x1080.jpg?t=1788418445",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2377930/0c146e177ddba3ec08ea79f62788ae5cff079f14/ss_0c146e177ddba3ec08ea79f62788ae5cff079f14.1920x1080.jpg?t=1788418445",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2377930/197a56a182c3e48646e5c3d12b91719db969af82/ss_197a56a182c3e48646e5c3d12b91719db969af82.1920x1080.jpg?t=1788418445",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2377930/30d28bd9ac33600e7442eccf62b313d52cab1a2c/ss_30d28bd9ac33600e7442eccf62b313d52cab1a2c.1920x1080.jpg?t=1788418445"
+      ],
+      baiduQr:"images/造化仙缘百度.png",
+      quarkQr:"images/造化仙缘夸克.png",
+      steam:"https://store.steampowered.com/app/2377930"
+    },
+    "29":{
+      name:"末世：我有一辆房车",
+      eng:"",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4663300/16f45aa392532eca2380b88de136e6e083ce2776/header_schinese.jpg?t=1787754797",
+      update:"2026-08‑08",
+      version:"v3.5.0",
+      desc:"这是一款融合了资源管理与卡牌构筑的末日生存模拟器。利用重生的记忆疯狂囤货，打造一座坚不可摧的移动堡垒。面对极寒与尸潮，统筹生态、冷眼旁观前世仇人的末路，建立你的废土乌托邦。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4663300/f82f9dfb45c39077dfd7cd3f69c36529a74d36e1/ss_f82f9dfb45c39077dfd7cd3f69c36529a74d36e1.1920x1080.jpg?t=1787754797",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4663300/f0c9e5bf66b6228fa2430a97518d1a564953d7d0/ss_f0c9e5bf66b6228fa2430a97518d1a564953d7d0.1920x1080.jpg?t=1787754797",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4663300/01cb9de87f1fe9f1755e9089b41437aeda0fbcfe/ss_01cb9de87f1fe9f1755e9089b41437aeda0fbcfe.1920x1080.jpg?t=1787754797",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4663300/6fef6ab0771480cb16485bc65a89e56b8c14830b/ss_6fef6ab0771480cb16485bc65a89e56b8c14830b.1920x1080.jpg?t=1787754797",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4663300/f0d89102990f76da4f1c180b220fd25fc566003b/ss_f0d89102990f76da4f1c180b220fd25fc566003b.1920x1080.jpg?t=1787754797",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4663300/d9a4cb856f4566550b0ce659170437eeba8f9216/ss_d9a4cb856f4566550b0ce659170437eeba8f9216.1920x1080.jpg?t=1787754797"
+      ],
+      baiduQr:"images/末世：我有一辆房车百度.png",
+      quarkQr:"images/末世：我有一辆房车夸克.png",
+      steam:"https://store.steampowered.com/app/4663300"
+    },
+    "28":{
+      name:"尸姬之梦",
+      eng:"",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2842800/f40e0723ef447af535605f1f327a7241004481c8/header.jpg?t=1785554656",
+      update:"2026-01‑12",
+      version:"v1.321",
+      desc:"卡牌，战斗！有人惊醒了沉睡的尸姬……也许，这个世界需要为尸姬大人的起床气付出一点代价……在《尸姬之梦》中，你将扮演被惊醒的尸姬大人，尝试各种奇奇妙妙的构筑组合，发现各种强力的，奇怪的对手，然后把他们全，都，打趴下！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2842800/c9a6a0d892183ed3f106fa2a7a8c5a6b28c73207/ss_c9a6a0d892183ed3f106fa2a7a8c5a6b28c73207.1920x1080.jpg?t=1785554656",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2842800/a5bc63ae82c14bba65313ea959d24666c579b96e/ss_a5bc63ae82c14bba65313ea959d24666c579b96e.1920x1080.jpg?t=1785554656",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2842800/433f3c0bf5f8ee2c00e38be8cdfb1711d91bbcfc/ss_433f3c0bf5f8ee2c00e38be8cdfb1711d91bbcfc.1920x1080.jpg?t=1785554656",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2842800/f454b5e35be4ba0abcbbb215ff89f91b768e7547/ss_f454b5e35be4ba0abcbbb215ff89f91b768e7547.1920x1080.jpg?t=1785554656",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2842800/be3db8268bece5b4b0bf30f6248e1b8bb6021dff/ss_be3db8268bece5b4b0bf30f6248e1b8bb6021dff.1920x1080.jpg?t=1785554656",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2842800/4803f31aedc769b55a0c5b80c4c18807ce83c2c9/ss_4803f31aedc769b55a0c5b80c4c18807ce83c2c9.1920x1080.jpg?t=1785554656"
+      ],
+      baiduQr:"images/尸姬之梦百度.png",
+      quarkQr:"images/尸姬之梦夸克.png",
+      steam:"https://store.steampowered.com/app/2842800"
+    },
+    "27":{
+      name:"修仙故事：无尽剑域",
+      eng:"Cultivation Story: Infinite Sword Realm",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3159440/59aa739b4959d818f3cb2602c12c1b3bc6d510cd/header.jpg?t=1788031960",
+      update:"2025-06‑11",
+      version:"v0.90",
+      desc:"《修仙故事:无尽剑域》是一款以寿元为代价，主打极致打击感的修真卡牌肉鸽游戏！进入剑之世界，在生死之间寻求平衡，踏上逆天改命、羽化登仙之路。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3159440/6d981e60ddb1755f9f82b0d3c802a34090aaef8e/ss_6d981e60ddb1755f9f82b0d3c802a34090aaef8e.1920x1080.jpg?t=1788031960",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3159440/456aa26a7c23c1ee87a9fe27f85d8261d2321279/ss_456aa26a7c23c1ee87a9fe27f85d8261d2321279.1920x1080.jpg?t=1788031960",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3159440/497719023db0c94934501ac7c7c350f6e548014d/ss_497719023db0c94934501ac7c7c350f6e548014d.1920x1080.jpg?t=1788031960",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3159440/6b17803dbc533dec7bf38aabb5d533da4c3d1647/ss_6b17803dbc533dec7bf38aabb5d533da4c3d1647.1920x1080.jpg?t=1788031960",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3159440/383cbde71d0ad3830ccf6129d09054092ac6e145/ss_383cbde71d0ad3830ccf6129d09054092ac6e145.1920x1080.jpg?t=1788031960",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3159440/30c6cf9d87c25870b6b6f0c2f0a7ef63ecd0b33b/ss_30c6cf9d87c25870b6b6f0c2f0a7ef63ecd0b33b.1920x1080.jpg?t=1788031960"
+      ],
+      baiduQr:"images/修仙故事：无尽剑域百度.png",
+      quarkQr:"images/修仙故事：无尽剑域夸克.png",
+      steam:"https://store.steampowered.com/app/3159440"
+    },
+    "26":{
+      name:"挂机魔王",
+      eng:"",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4932620/51e28f5f1e71793d0021dc50e85c6a38804252e0/header.jpg?t=1787535793",
+      update:"2026-08‑24",
+      version:"v1.4.7",
+      desc:"《挂机魔王》是一款暗黑风挂机刷宝游戏。放置即刷怪爆装，六级稀有度装备、宝石符文遗物传奇词缀套装，搭配技能树打造上百种 Build。三重成长循环，图鉴试炼战宠日常，尽享无尽掉落与数值爆炸的爽快。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4932620/3367eb07c5cc8b5be8148ef6d7dcb2631a51ce90/ss_3367eb07c5cc8b5be8148ef6d7dcb2631a51ce90.1920x1080.jpg?t=1787535793",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4932620/c985617e4ea7269f89d65cfe757ae11e57e61024/ss_c985617e4ea7269f89d65cfe757ae11e57e61024.1920x1080.jpg?t=1787535793",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4932620/045c266266620ceb0401825f3868179e309e12f5/ss_045c266266620ceb0401825f3868179e309e12f5.1920x1080.jpg?t=1787535793",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4932620/9100a46707ebcd9a56c490c1c73f94d1b876d3e5/ss_9100a46707ebcd9a56c490c1c73f94d1b876d3e5.1920x1080.jpg?t=1787535793",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4932620/6c783bd8ac6589e8969eacf426bef49f8a04f431/ss_6c783bd8ac6589e8969eacf426bef49f8a04f431.1920x1080.jpg?t=1787535793",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4932620/3fec82002b56b096309dadfa15a8357c6a347f55/ss_3fec82002b56b096309dadfa15a8357c6a347f55.1920x1080.jpg?t=1787535793"
+      ],
+      baiduQr:"images/挂机魔王百度.png",
+      quarkQr:"images/挂机魔王夸克.png",
+      steam:"https://store.steampowered.com/app/4932620"
+    },
+    "25":{
+      name:"我在地府打麻将",
+      eng:"Demonic Mahjong",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3444020/55517a67e62165cd04ee7daebf4c64cfb2c48a39/header_schinese.jpg?t=1785294329",
+      update:"2025-07‑16",
+      version:"v0.2.67",
+      desc:"《我地麻》是一款以麻将为灵感并结合了麻将基础玩法的卡牌构筑肉鸽游戏，用你手中的麻将构筑出强大的番型组合、胡出难以想象的超高分数、针对Boss特点形成独特的制胜策略吧！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3444020/e935ecf96a00be0754ada7c982b11acb0331d6f5/ss_e935ecf96a00be0754ada7c982b11acb0331d6f5.1920x1080.jpg?t=1785294329",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3444020/9882c7f3f4f93253a97010908a1bf6d21a5667b1/ss_9882c7f3f4f93253a97010908a1bf6d21a5667b1.1920x1080.jpg?t=1785294329",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3444020/8ff4e6357399990f81f1877dcc98350231ca0043/ss_8ff4e6357399990f81f1877dcc98350231ca0043.1920x1080.jpg?t=1785294329",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3444020/b76734f63c73e92e6171e0cdf8385d29f0eb9209/ss_b76734f63c73e92e6171e0cdf8385d29f0eb9209.1920x1080.jpg?t=1785294329",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3444020/d6d7f559eb14254b937ad30f39ca5f37f91907e5/ss_d6d7f559eb14254b937ad30f39ca5f37f91907e5.1920x1080.jpg?t=1785294329",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3444020/0b0d7848ff079bba5bc515ce265538a44710d0ad/ss_0b0d7848ff079bba5bc515ce265538a44710d0ad.1920x1080.jpg?t=1785294329"
+      ],
+      baiduQr:"images/我在地府打麻将百度.png",
+      quarkQr:"images/我在地府打麻将夸克.png",
+      steam:"https://store.steampowered.com/app/3444020"
+    },
+    "24":{
+      name:"灵兽江湖",
+      eng:"Beast Saga",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2232880/header.jpg?t=1777534141",
+      update:"2026-04‑30",
+      version:"Build.25037550",
+      desc:"《灵兽江湖》是一款开放世界灵兽武侠RPG游戏。你将扮演一个名叫狼九思的狼族少年，体验自由探索、采集制造、生活技能、武学内功、结交侠客以及江湖奇遇等特色玩法，在非线性无限制开放式剧情的抉择中，每一步都将成就独属于你的江湖传说。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2232880/ss_2ad73dac34da377e4b7766d744e2badfaa6dcbd4.1920x1080.jpg?t=1777534141",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2232880/ss_42256e93f50deee5c2d26062842018240b1de79c.1920x1080.jpg?t=1777534141",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2232880/ss_0cda4227260c3a1b64a0a0a1840fb3eed730b9a1.1920x1080.jpg?t=1777534141",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2232880/ss_5f141e6e0c30cb103bd88b5280edf256e5d0d719.1920x1080.jpg?t=1777534141",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2232880/ss_8714759e41e07e0eb1f172993395e4523f322a5e.1920x1080.jpg?t=1777534141",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2232880/ss_002a70c828e69c5e3436378d440c47d099c1a9aa.1920x1080.jpg?t=1777534141"
+      ],
+      baiduQr:"images/灵兽江湖百度.png",
+      quarkQr:"images/灵兽江湖夸克.png",
+      steam:"https://store.steampowered.com/app/2232880"
+    },
+    "23":{
+      name:"虚妄之盒",
+      eng:"Cubic Cosmos",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3332600/44c0b387a2e790fe65e42594e57bfe696b56f63a/header_alt_assets_4_schinese.jpg?t=1784279773",
+      update:"2026-04‑28",
+      version:"v1.1.5",
+      desc:"《虚妄之盒》是一款极致爽快的下落式肉鸽卡牌游戏。你被困在一场致命的游戏中，一旦失败就会沦为虚妄女神的玩偶。你拥有无限轮回的能力，能否到达命运的终局？",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3332600/e959d6da0f2f15b7789c27455d17f736e2c41e20/ss_e959d6da0f2f15b7789c27455d17f736e2c41e20.1920x1080.jpg?t=1784279773",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3332600/7bd06b69eea46ba84e6eb522d3409793176d6ca9/ss_7bd06b69eea46ba84e6eb522d3409793176d6ca9.1920x1080.jpg?t=1784279773",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3332600/3996876fa813add27ba428a2ab3edda9f432cbe4/ss_3996876fa813add27ba428a2ab3edda9f432cbe4.1920x1080.jpg?t=1784279773",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3332600/5b7171e43eb84775dc2ad2cf5c117614b011d045/ss_5b7171e43eb84775dc2ad2cf5c117614b011d045.1920x1080.jpg?t=1784279773",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3332600/8fbaccfdbd16b31e56c193d5ad9b92be3304b236/ss_8fbaccfdbd16b31e56c193d5ad9b92be3304b236.1920x1080.jpg?t=1784279773",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3332600/eb72ee3d1972395fd1e4780c28fd65de4fb9f9a7/ss_eb72ee3d1972395fd1e4780c28fd65de4fb9f9a7.1920x1080.jpg?t=1784279773"
+      ],
+      baiduQr:"images/虚妄之盒百度.png",
+      quarkQr:"images/虚妄之盒夸克.png",
+      steam:"https://store.steampowered.com/app/3332600"
+    },
+    "22":{
+      name:"我的英雄旅团",
+      eng:"Wonderland",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3928980/cb38eb50866ffc730eda190b2742940cefd2b8c5/header_schinese.jpg?t=1785480939",
+      update:"2026-07‑31",
+      version:"v1.0.15",
+      desc:"在埃尔法尔这片剑与魔法的奇幻大陆上，你将扮演一名探索者，组建并发展自己的公会，带领成员接取任务、挑战副本、锻造装备、参与竞技，逐步揭开九大圣地的秘密。游戏融合了策略养成、Roguelike元素，公会竞技团战等多种要素，不容错过。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3928980/43b1e8bc321055ab1144e53b7475a7af0e29ea7d/ss_43b1e8bc321055ab1144e53b7475a7af0e29ea7d.1920x1080.jpg?t=1785480939",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3928980/f6b15d1afa630efab22664b728efcaff69cf9ce8/ss_f6b15d1afa630efab22664b728efcaff69cf9ce8.1920x1080.jpg?t=1785480939",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3928980/cb2f9ddc4ebeb9edcc81c5fb2a20473a64be3b8d/ss_cb2f9ddc4ebeb9edcc81c5fb2a20473a64be3b8d.1920x1080.jpg?t=1785480939",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3928980/2150d609294889a10798143f2021c4a77f4b1711/ss_2150d609294889a10798143f2021c4a77f4b1711.1920x1080.jpg?t=1785480939",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3928980/73a68a66942ec9891d2940bcbeda95f6c9637cd8/ss_73a68a66942ec9891d2940bcbeda95f6c9637cd8.1920x1080.jpg?t=1785480939",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3928980/702a3bbc0ca16bd48b9cb05ee6363d96c1b35bde/ss_702a3bbc0ca16bd48b9cb05ee6363d96c1b35bde.1920x1080.jpg?t=1785480939"
+      ],
+      baiduQr:"images/我的英雄旅团百度.png",
+      quarkQr:"images/我的英雄旅团夸克.png",
+      steam:"https://store.steampowered.com/app/3928980"
+    },
+    "21":{
+      name:"点击地牢",
+      eng:"Tap Dungeon",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4676750/c6c45f15421869a660956982a9f219774b626c7f/header_schinese.jpg?t=1788419328",
+      update:"2026-08‑28",
+      version:"v1.1.4",
+      desc:"像素风异世界地牢肉鸽冒险！选择剑士、刺客、法师等职业，踏入随机生成的卡片迷宫。对抗哥布林、兽人与亡灵，收集神器，挑战隐藏Boss。死亡即新生，无数Build等你征服。成为拯救王国的英雄！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4676750/e44d72985f3336b60adf941ef8a08ac3d70baf08/ss_e44d72985f3336b60adf941ef8a08ac3d70baf08.1920x1080.jpg?t=1788419328",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4676750/18edeedf334b56ba97974e9c1e76096b193d3f4a/ss_18edeedf334b56ba97974e9c1e76096b193d3f4a.1920x1080.jpg?t=1788419328",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4676750/26d9b2e14a3a6bb6c5b74b5b28a59149cb01a6e0/ss_26d9b2e14a3a6bb6c5b74b5b28a59149cb01a6e0.1920x1080.jpg?t=1788419328",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4676750/2dd14a14adca4af19439873cf58df5bd5551a3e4/ss_2dd14a14adca4af19439873cf58df5bd5551a3e4.1920x1080.jpg?t=1788419328",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4676750/763600f51d6cabd5eb69cfbf3e706eee26d7e968/ss_763600f51d6cabd5eb69cfbf3e706eee26d7e968.1920x1080.jpg?t=1788419328",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4676750/1c66220370114a84c8faaf06523d66ecff23f700/ss_1c66220370114a84c8faaf06523d66ecff23f700.1920x1080.jpg?t=1788419328"
+      ],
+      baiduQr:"images/点击地牢百度.png",
+      quarkQr:"images/点击地牢夸克.png",
+      steam:"https://store.steampowered.com/app/4676750"
+    },
+    "20":{
+      name:"大侠狂想曲",
+      eng:"",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4125770/9e47b00135f8924fb46dea5541a5ffea57ed3dcb/header_schinese.jpg?t=1788081045",
+      update:"2026-08‑21",
+      version:"Build.25081004",
+      desc:"《大侠狂想曲》是一款融合了种田养成、冒险探索与恋爱剧情的武侠游戏。 你原本只是一个在村中平凡生活的少年，一次意外与妖相遇，命悬一线，幸得太玄剑宗弟子出手相救。自此，命运的齿轮开始转动。 你将踏入江湖，结识各路侠客，修炼心法，打通经脉，提升境界，从无名之辈成长为独当一面的强者。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4125770/59c014a1bc21c1e259e2138a53390a2a7d167449/ss_59c014a1bc21c1e259e2138a53390a2a7d167449.1920x1080.jpg?t=1788081045",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4125770/4f48bf6dd946b66f02f1dc46656b948f5df2c330/ss_4f48bf6dd946b66f02f1dc46656b948f5df2c330.1920x1080.jpg?t=1788081045",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4125770/ae98aea3ffaaeeaace8c0849aab7258d067925a6/ss_ae98aea3ffaaeeaace8c0849aab7258d067925a6.1920x1080.jpg?t=1788081045",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4125770/e376fae69aede9368fea1cf2fc6282ba309c801b/ss_e376fae69aede9368fea1cf2fc6282ba309c801b.1920x1080.jpg?t=1788081045",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4125770/f8861a1797a2111308d73f28eb6b48bcd79735c5/ss_f8861a1797a2111308d73f28eb6b48bcd79735c5.1920x1080.jpg?t=1788081045",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4125770/144ef07c61a80776933b6572f5d97f0f89e88a2d/ss_144ef07c61a80776933b6572f5d97f0f89e88a2d.1920x1080.jpg?t=1788081045"
+      ],
+      baiduQr:"images/大侠狂想曲百度.png",
+      quarkQr:"images/大侠狂想曲夸克.png",
+      steam:"https://store.steampowered.com/app/4125770"
+    },
+    "19":{
+      name:"呓语小镇",
+      eng:"Whisper of the House",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2589500/ca073d3eeca2295c8865046b0cd8ff5ac86a720f/header_alt_assets_3_schinese.jpg?t=1787795288",
+      update:"2025-08‑27",
+      version:"v1.3.0.3",
+      desc:"《呓语小镇》是一款轻松治愈的装修收纳游戏。你将接受小镇居民的各种委托——搬家、整理、打扫卫生，在不经意间影响他们的生活轨迹，或许还会发现一些小秘密……",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2589500/4f5e726029871e5333b0683c985452967ccaa9c4/ss_4f5e726029871e5333b0683c985452967ccaa9c4.1920x1080.jpg?t=1787795288",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2589500/1fc4e7a10b1a0c5bef24a741abdc5908aa0e1eb2/ss_1fc4e7a10b1a0c5bef24a741abdc5908aa0e1eb2.1920x1080.jpg?t=1787795288",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2589500/e28ac2fd768a9f6b9bf65753db0d5b7ea2039dc0/ss_e28ac2fd768a9f6b9bf65753db0d5b7ea2039dc0.1920x1080.jpg?t=1787795288",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2589500/798b4509ba5d3fba8159b26c160c0eb108989425/ss_798b4509ba5d3fba8159b26c160c0eb108989425.1920x1080.jpg?t=1787795288",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2589500/deab90fd334623bd38f5cdb71e9b6e5015a8999f/ss_deab90fd334623bd38f5cdb71e9b6e5015a8999f.1920x1080.jpg?t=1787795288",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2589500/897365b601b8bd764b28997d18dd42442032f732/ss_897365b601b8bd764b28997d18dd42442032f732.1920x1080.jpg?t=1787795288"
+      ],
+      baiduQr:"images/呓语小镇百度.png",
+      quarkQr:"images/呓语小镇夸克.png",
+      steam:"https://store.steampowered.com/app/2589500"
+    },
+    "18":{
+      name:"霓虹深渊2 单机+联机",
+      eng:"Neon Abyss 2",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2235200/c66dbc6a031ea09c96a92a25d956d06505c93025/header_schinese.jpg?t=1786440755",
+      update:"2025-07‑17",
+      version:"v20260901",
+      desc:"四人联机 [ 赛博神话 ] 肉鸽！创新武器系统 + 无限道具叠加，用千奇百怪的组合杀穿众神！刀光与子弹炸裂满屏——爽！燥！永远出乎意料！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2235200/e63b2ecb3818945f39070fbbd31141093201db2d/ss_e63b2ecb3818945f39070fbbd31141093201db2d.1920x1080.jpg?t=1786440755",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2235200/ss_0916dcc803e648390e091138fc01d1c3cb2c69c9.1920x1080.jpg?t=1786440755",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2235200/3170ce4aebd32c9918a6c18e3f539c91fc23fb1c/ss_3170ce4aebd32c9918a6c18e3f539c91fc23fb1c.1920x1080.jpg?t=1786440755",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2235200/584414bc4ff960a4eb164706e5b0be8233cd6942/ss_584414bc4ff960a4eb164706e5b0be8233cd6942.1920x1080.jpg?t=1786440755",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2235200/527ebaad7704c5b562d4d6b79357f9275af04a4b/ss_527ebaad7704c5b562d4d6b79357f9275af04a4b.1920x1080.jpg?t=1786440755",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2235200/11d9ba9bc0d2e42c98b0a16bc9ffc6fc563e6e43/ss_11d9ba9bc0d2e42c98b0a16bc9ffc6fc563e6e43.1920x1080.jpg?t=1786440755"
+      ],
+      baiduQr:"images/霓虹深渊2百度.png",
+      quarkQr:"images/霓虹深渊2夸克.png",
+      steam:"https://store.steampowered.com/app/2235200"
+    },
+    "17":{
+      name:"生存日志",
+      eng:"Survival Log",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4164790/486f33cc0467e8770ca456ad03b71cc4d18735ac/header_schinese.jpg?t=1788236561",
+      update:"2026-08‑12",
+      version:"v1.0.15511",
+      desc:"《生存日志》是一款以丧尸末日为题材的囤货生存模拟游戏。你扮演一名预知丧尸危机爆发的普通人，利用重生优势，在灾难来临前疯狂囤积物资、加固住所，为生存而战。游戏聚焦策略规划与资源管理，带来独特的“囤货避难”沉浸体验。每一次死亡都会成为下一次轮回的经验，让你不断优化计划、突破极限——这次，一定要活下去！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4164790/45c0eb20d8f99c10be76e383138ff84431b066ae/ss_45c0eb20d8f99c10be76e383138ff84431b066ae.1920x1080.jpg?t=1788236561",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4164790/dcdf33698fb37a9dbbc5d256fa34c4365ef73ff3/ss_dcdf33698fb37a9dbbc5d256fa34c4365ef73ff3.1920x1080.jpg?t=1788236561",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4164790/c77ed5e61a40957cc41aaa9266c86161d23cdeb0/ss_c77ed5e61a40957cc41aaa9266c86161d23cdeb0.1920x1080.jpg?t=1788236561",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4164790/d5f21937b7fa1ea08e7aa9cc17970180ab563417/ss_d5f21937b7fa1ea08e7aa9cc17970180ab563417.1920x1080.jpg?t=1788236561",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4164790/e33843184af7854116f61dd3f2fd97dd306c32d1/ss_e33843184af7854116f61dd3f2fd97dd306c32d1.1920x1080.jpg?t=1788236561",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4164790/c998dd37f89520805afb527d179800a5c2a4fa8c/ss_c998dd37f89520805afb527d179800a5c2a4fa8c.1920x1080.jpg?t=1788236561"
+      ],
+      baiduQr:"images/生存日志百度.png",
+      quarkQr:"images/生存日志夸克.png",
+      steam:"https://store.steampowered.com/app/4164790"
+    },
+    "16":{
+      name:"放置之路：古神复苏",
+      eng:"Path of Idle: Old Gods Rising",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4243990/a99098033c593d8f2001933c47bf4d1f24666e84/header_schinese.jpg?t=1786667366",
+      update:"2026-08‑13",
+      version:"v1.0.11.1",
+      desc:"这是一款克苏鲁题材，集自动战斗、刷宝、开箱子、策略搭配、城镇建设、装备打造、符文之语、推关、爬塔、异界、赛季玩法于一体的放置挂机游戏。你将成为古神最忠实的仆从，建设城镇，蛊惑神选者，为古神复苏而战！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4243990/bb880e078ff1ecaae3249490237f34f7926da774/ss_bb880e078ff1ecaae3249490237f34f7926da774.1920x1080.jpg?t=1786667366",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4243990/287fa033b381afe4f8137ae645a0af947b84240c/ss_287fa033b381afe4f8137ae645a0af947b84240c.1920x1080.jpg?t=1786667366",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4243990/392bb478b2bdcbcef1309d06044e1efb591f3c3d/ss_392bb478b2bdcbcef1309d06044e1efb591f3c3d.1920x1080.jpg?t=1786667366",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4243990/28688425ecc0383392bf1ae8d1b7673b2afa01cc/ss_28688425ecc0383392bf1ae8d1b7673b2afa01cc.1920x1080.jpg?t=1786667366",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4243990/dea7b9eaaff6bd5d59e00a814ff4d241a28371dd/ss_dea7b9eaaff6bd5d59e00a814ff4d241a28371dd.1920x1080.jpg?t=1786667366",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/4243990/c610242bac95acb2e56e0cde05e235a1cad58582/ss_c610242bac95acb2e56e0cde05e235a1cad58582.1920x1080.jpg?t=1786667366"
+      ],
+      baiduQr:"images/放置之路：古神复苏百度.png",
+      quarkQr:"images/放置之路：古神复苏夸克.png",
+      steam:"https://store.steampowered.com/app/4243990"
+    },
+    "15":{
+      name:"三国朋克：爱与破坏之神",
+      eng:"",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2505590/689f7b64988899d5d7aeca2b39c8cbf174c2837a/header_schinese.jpg?t=1786195814",
+      update:"2026-08‑06",
+      version:"v20260901",
+      desc:"一款赛博朋克题材的类暗黑地牢回合制养成+酒吧经营模拟+爆衣玩法的超级缝合游戏，架空历史的三国英雄闯荡汉港城，50周的时间，13位少男少女，一起实现天下太平吧！",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2505590/7ab136b4e57e1feb2b2c18617b62af89d819a64e/ss_7ab136b4e57e1feb2b2c18617b62af89d819a64e.1920x1080.jpg?t=1786195814",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2505590/654c3bc4389a043c38e266bd4aa9cee7517ec68d/ss_654c3bc4389a043c38e266bd4aa9cee7517ec68d.1920x1080.jpg?t=1786195814",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2505590/c2cef365ad50484fab02d4aa8a0a16eea6018c35/ss_c2cef365ad50484fab02d4aa8a0a16eea6018c35.1920x1080.jpg?t=1786195814",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2505590/b8009dd133565423b2991c69f3810ed6744fd77f/ss_b8009dd133565423b2991c69f3810ed6744fd77f.1920x1080.jpg?t=1786195814",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2505590/9da8c4a0e25df6c7b1af2ddadb00cb1a79d5e473/ss_9da8c4a0e25df6c7b1af2ddadb00cb1a79d5e473.1920x1080.jpg?t=1786195814",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2505590/fd6b566009bab7fc3689ddac654bf1525618a9ef/ss_fd6b566009bab7fc3689ddac654bf1525618a9ef.1920x1080.jpg?t=1786195814"
+      ],
+      baiduQr:"images/三国朋克百度.png",
+      quarkQr:"images/三国朋克夸克.png",
+      steam:"https://store.steampowered.com/app/2505590"
+    },
+    "14":{
+      name:"无为修仙传",
+      eng:"Wuwei Cultivation",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5070160/1d1ced4aae6ff94ae8127169cba8cbd417da26ca/header_schinese.jpg?t=1788246164",
+      update:"2026-09‑01",
+      version:"v1.0.7",
+      desc:"《无为修仙传》是一款极简东方修仙题材的单机放置游戏。玩家将从炼气期起步，在闭关吐纳、野外历练与百般杂学中积累修为，逐步突破筑基、金丹、元婴，直至渡劫十二层。探索风格各异的野外、险地与绝境，挑战妖兽、邪修和镇守秘境的强大Boss，获取装备与珍贵破境丹。垂钓、采药、采矿、酿造、炼器、炼丹、符箓和阵法等杂学。",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5070160/ad4f773dcc1b64807bf77123de54ca27a2a1d8fa/ss_ad4f773dcc1b64807bf77123de54ca27a2a1d8fa.1920x1080.jpg?t=1788246164",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5070160/d9a7b29a2c4be627909bde12309a6f9983459630/ss_d9a7b29a2c4be627909bde12309a6f9983459630.1920x1080.jpg?t=1788246164",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5070160/7beb4862fb5b9a7d4feb068da1219543f402cee7/ss_7beb4862fb5b9a7d4feb068da1219543f402cee7.1920x1080.jpg?t=1788246164",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5070160/35ea042b42653e06374182dec83e28d927eaf11f/ss_35ea042b42653e06374182dec83e28d927eaf11f.1920x1080.jpg?t=1788246164",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5070160/9127364f7630e89116cd7780284600a0fe64cf80/ss_9127364f7630e89116cd7780284600a0fe64cf80.1920x1080.jpg?t=1788246164",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5070160/8fed47f9bfe1a66a74626bec60ed13fda92a8acd/ss_8fed47f9bfe1a66a74626bec60ed13fda92a8acd.1920x1080.jpg?t=1788246164"
+      ],
+      baiduQr:"images/无为修仙传百度.png",
+      quarkQr:"images/无为修仙传夸克.png",
+      steam:"https://store.steampowered.com/app/5070160"
+    },
+    "13":{
+      name:"奶茶店模拟器 重生之我在冰堡甜城当店长 单机+联机",
+      eng:"Boba Cafe Simulator",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3683770/30eaf83654acb1188379662c0499c04f5ec15acc/header_schinese.jpg?t=1788421462",
+      update:"2026-07‑24",
+      version:"v1.060",
+      desc:"你重生了，重生在创业之初，上一世你因经营不善，最终奶茶店被对手碾碎；这一世，炼乳的甜香在血液里翻滚，你立志只做一件事——让「冰堡甜城」成为行业巅峰！最多8人合作经营奶茶店，亲手制作饮品、设计菜单与定价、摆放设备、装修店铺，应对客流与外卖平台，打造你的奶茶帝国。 ",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3683770/670a259b42284bd33dcc0fcb4d8a8eb22e45da55/ss_670a259b42284bd33dcc0fcb4d8a8eb22e45da55.1920x1080.jpg?t=1788421462",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3683770/f060f1ab650e665381faec61a0af03d0761427a3/ss_f060f1ab650e665381faec61a0af03d0761427a3.1920x1080.jpg?t=1788421462",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3683770/6754f51e45e9f14ba24963ebd2178927e586d487/ss_6754f51e45e9f14ba24963ebd2178927e586d487.1920x1080.jpg?t=1788421462",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3683770/f390b37a6c5ecb7d2ab87f80b8d18845833c9b6e/ss_f390b37a6c5ecb7d2ab87f80b8d18845833c9b6e.1920x1080.jpg?t=1788421462",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3683770/da6afe0598776f259bd85d434f6d8be27e956f13/ss_da6afe0598776f259bd85d434f6d8be27e956f13.1920x1080.jpg?t=1788421462",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/3683770/82bc38e2c948b11af86f94b89d0b46e3dac0f500/ss_82bc38e2c948b11af86f94b89d0b46e3dac0f500.1920x1080.jpg?t=1788421462"
+      ],
+      baiduQr:"images/奶茶店模拟器百度.png",
+      quarkQr:"images/奶茶店模拟器夸克.png",
+      steam:"https://store.steampowered.com/app/3683770"
+    },
+    "12":{
+      name:"天临混元",
+      eng:"Celestial Descends",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2765320/f3b75a63bb361b720c19022f497f45023676e019/header_schinese.jpg?t=1786008762",
+      update:"2026-07‑23",
+      version:"Build.25052463",
+      desc:"上界天人俯瞰众生,视凡人如蝼蚁棋子。而你,一个本不该存在于天命棋谱上的人,将踏入这片仙侠大地,以战棋之策穿过势力纷争与秘境险局。 游戏重培养构筑,海量BD组合带来烧脑策略深度。 ",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2765320/1ae747120ff374b5d686a74121c74b0516315fa7/ss_1ae747120ff374b5d686a74121c74b0516315fa7.1920x1080.jpg?t=1786008762",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2765320/1165d55238417ff6a41916b8a9f0b67055007370/ss_1165d55238417ff6a41916b8a9f0b67055007370.1920x1080.jpg?t=1786008762",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2765320/9fca478131b1c9c06d9e58a5214ca012859adce6/ss_9fca478131b1c9c06d9e58a5214ca012859adce6.1920x1080.jpg?t=1786008762",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2765320/2b9de2bfc5101d2ac4b39aab60635d7b1f7602ae/ss_2b9de2bfc5101d2ac4b39aab60635d7b1f7602ae.1920x1080.jpg?t=1786008762",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2765320/ad976e9c0e85c5ced44c54b88b611859f0a74037/ss_ad976e9c0e85c5ced44c54b88b611859f0a74037.1920x1080.jpg?t=1786008762",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/2765320/b94ec34aa1c32e77679a8f1f688d8508ef533348/ss_b94ec34aa1c32e77679a8f1f688d8508ef533348.1920x1080.jpg?t=1786008762"
+      ],
+      baiduQr:"images/天临混元百度.png",
+      quarkQr:"images/天临混元夸克.png",
+      steam:"https://store.steampowered.com/app/2765320"
+    },
+    "11":{
+      name:"余烬王国",
+      eng:"Ember Kingdom",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5065170/3b13bc34e34033d9a6c662cde600580cd2215c30/header.jpg?t=1788404309",
+      update:"2026-09‑03",
+      version:"v1.0.0",
+      desc:"《Ember Kingdom》是一款黑暗奇幻回合制冒险 RPG，融合牌组构筑式的路线规划与深度职业养成。选择英雄、塑造天赋、读懂敌人意图，在一次次抉择中踏上夺回王座的道路。 ",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5065170/72cdc25436cce9961ffe360aa932aa338057c526/ss_72cdc25436cce9961ffe360aa932aa338057c526.1920x1080.jpg?t=1788404309",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5065170/681fc4ce8a00994ed803d894723477f253c27228/ss_681fc4ce8a00994ed803d894723477f253c27228.1920x1080.jpg?t=1788404309",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5065170/50860aa77881b5fa454ee97ec429f7d61bf56a0b/ss_50860aa77881b5fa454ee97ec429f7d61bf56a0b.1920x1080.jpg?t=1788404309",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5065170/2ff53cb5e55d6a3efe617472f10e143ae628b67b/ss_2ff53cb5e55d6a3efe617472f10e143ae628b67b.1920x1080.jpg?t=1788404309",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5065170/8c2aa8f5d727a9c44c5a2dc93e10087e804702ab/ss_8c2aa8f5d727a9c44c5a2dc93e10087e804702ab.1920x1080.jpg?t=1788404309",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/5065170/a76a67a18a6c0d83e0daf4675e3b6365ccb54533/ss_a76a67a18a6c0d83e0daf4675e3b6365ccb54533.1920x1080.jpg?t=1788404309"
+      ],
+      baiduQr:"images/余烬王国百度.png",
+      quarkQr:"images/余烬王国夸克.png",
+      steam:"https://store.steampowered.com/app/5065170"
+    },
+    "10":{
+      name:"断箭",
+      eng:"Broken Arrow",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1604270/feb1cd04b590031cedcdca88bcd473e741e31b7a/header_alt_assets_5_schinese.jpg?t=1788255707",
+      update:"2025-06‑20",
+      version:"v1.2.0",
+      desc:"《Broken Arrow - 断箭》是一款大型现代战争实时战术游戏，融合了多兵种战争的复杂性与充满动作张力的实时战术玩法。 ",
+      shots:[
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1604270/ss_4d0e8eb13856a0862eaa332ddbe29bed2b4051d3.1920x1080.jpg?t=1788255707",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1604270/ss_e228c622f9e4d24bbc7270a68dbea4001a3b5da7.1920x1080.jpg?t=1788255707",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1604270/ss_941769d44a1f2f922af634c65007d7103d34ef92.1920x1080.jpg?t=1788255707",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1604270/ss_5a291656549c5e3fb488e63e582c0716bc3d0dcd.1920x1080.jpg?t=1788255707",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1604270/ss_f2ce20675dd4b464ea7124705b3cf0fe6b5c5cf1.1920x1080.jpg?t=1788255707",
+        "https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1604270/ss_26394c38a6ae1dccaf526cf81e80a140488092cc.1920x1080.jpg?t=1788255707"
+      ],
+      baiduQr:"images/断箭百度.png",
+      quarkQr:"images/断箭夸克.png",
+      steam:"https://store.steampowered.com/app/1604270"
     },
     "9":{
       name:"龙之信条2",
@@ -293,7 +821,7 @@ document.addEventListener('DOMContentLoaded', function(){
     "5":{
       name:"深海迷航2：异星水域 单机+联机",
       eng:"Subnautica 2",
-      cover:"images/深海迷航2：异星水域.jpg",
+      cover:"https://shared.st.dl.eccdnx.com/store_item_assets/steam/apps/1962700/998f14fffb6e9917639ce4ba992c7e9f4a0157b5/header_schinese.jpg?t=1785967256",
       update:"2026‑08‑04",
       version:"v0.1.2.0",
       desc:"《Subnautica 2：异星水域》是背景设定在全新外星世界的水下生存冒险游戏，由Unknown Worlds倾力打造。可以单人游玩，也可以与好友组队开启四人合作模式。建造专属基地，制作不同工具，适应环境，水下求生。探索未知世界，揭开深海中隐藏的谜团。",
@@ -375,15 +903,16 @@ document.addEventListener('DOMContentLoaded', function(){
   const cat = getUrlParam("cat");
   const data = gameDB[gid];
   if(!data){
+    document.title = "页面不存在";
     document.body.innerHTML = `<div class="p-10 text-center"><h2>页面不存在</h2><a href="index.html">返回首页</a></div>`;
     return;
   }
-
+  // 使用gameDB内游戏name设置浏览器标签标题
+  document.title = data.name;
   //dom
   const toolLayout = document.getElementById('toolLayout');
   const gameLayout = document.getElementById('gameLayout');
   const breadWrap = document.getElementById("breadWrap");
-
   //面包屑
   let breadHtml = `<a href="index.html" class="text-blue-600">主页</a>`;
   if(cat){
@@ -391,29 +920,22 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   breadHtml += ` <span> › </span> <span>${data.name}</span>`;
   breadWrap.innerHTML = breadHtml;
-
-
   if(data.isTool){
     //渲染工具页面，隐藏游戏布局
     toolLayout.classList.remove('hidden');
     gameLayout.classList.add('hidden');
     currentToolData = data; //保存工具数据给委托事件使用
-
     document.getElementById('toolRuntimeDesc').innerText = data.runtimeDesc;
     document.getElementById('toolUnzipDesc').innerText = data.unzipDesc;
-
   }else{
     //普通游戏页面
     toolLayout.classList.add('hidden');
     gameLayout.classList.remove('hidden');
     currentToolData = null;
-
     const btnBaiduQr = document.getElementById("btnBaiduQr");
     const btnQuarkQr = document.getElementById("btnQuarkQr");
-
     btnBaiduQr.addEventListener("click", ()=>openNetdiskQr(data.baiduQr));
     btnQuarkQr.addEventListener("click", ()=>openNetdiskQr(data.quarkQr));
-
     document.getElementById("detailTitle").innerText = data.name;
     document.getElementById("detailEng").innerText = data.eng;
     document.getElementById("detailCover").src = data.cover;
@@ -422,7 +944,6 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById("linkSteam").href = data.steam;
     document.getElementById("linkSteam").innerText = data.steam;
     document.getElementById("detailDesc").innerText = data.desc;
-
     //渲染截图
     let shotHtml = "";
     data.shots.forEach((s,idx)=>{
@@ -436,7 +957,6 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     })
   }
-
   //====事件委托：工具页面按钮点击，修复hidden容器绑定失效问题====
   document.body.addEventListener('click',function(e){
     if(e.target.classList.contains('tool-qr-btn') && currentToolData){
@@ -444,12 +964,10 @@ document.addEventListener('DOMContentLoaded', function(){
       openNetdiskQr(currentToolData[qrKey]);
     }
   })
-
   qrModalClose.addEventListener("click", closeNetdiskQr);
   netdiskQrModal.addEventListener("click", e=>{
     if(e.target === netdiskQrModal) closeNetdiskQr();
   })
-
 })
 </script>
 </body>
